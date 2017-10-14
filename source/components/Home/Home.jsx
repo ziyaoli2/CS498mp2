@@ -4,7 +4,6 @@ import { render } from "react-dom";
 import { Link, HashRouter as Router, Route } from "react-router-dom";
 
 import _ from "lodash";
-import faker from "faker";
 import axios from "axios";
 import styles from "./Home.scss";
 
