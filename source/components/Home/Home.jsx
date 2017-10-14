@@ -222,6 +222,8 @@ class Detail extends Component {
               }).catch((err) => {
                 console.log(err)
               })
+
+
             }
 
 
@@ -246,11 +248,42 @@ var prepre = this.state.id - 1;
    }
 */
 
-    const But = <div>
-                       <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
-              <span>                                                     </span>
-                         <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
-        </div>
+    const But = ()=>{
+            if(this.state.id == 1) {
+                   return( <div>
+                                                 <Button as={Link} to={`/detail/${50}`}>Pre</Button>
+                                        <span>                                                     </span>
+                                                   <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
+                                             </div>)
+                }
+
+                  if (this.state.id == 50) {
+                        return(
+                                    <div>
+                                                                                     <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
+                                                                            <span>                                                     </span>
+                                                                                       <Button as={Link} to={`/detail/${1}`}>Next </Button>
+                                                                                 </div>
+
+
+                        )
+
+                  }
+            return(
+                      <div>
+                                                                                                         <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
+                                                                                                <span>                                                     </span>
+                                                                                                           <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
+                                                                                                     </div>
+
+            )
+
+
+
+    }
+
+
+
 
 
 
