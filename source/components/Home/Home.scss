@@ -2,8 +2,11 @@ span {
     white-space: pre;
 }
 
+
+$length: 200px;
+
 img.photo {
-    width:200px;
-    height:200px;
+    width:$length;
+    height:$length;
 
 }

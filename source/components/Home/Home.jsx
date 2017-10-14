@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Search, Grid, Header,Image,Item } from "semantic-ui-react";
 import { render } from "react-dom";
 import { Link, HashRouter as Router, Route } from "react-router-dom";
-
+import PropTypes from 'prop-types'
 import _ from "lodash";
 import axios from "axios";
 import styles from "./Home.scss";
@@ -23,7 +23,6 @@ class Home extends Component {
 
   componentWillMount() {
     this._isMounted = true;
-
     axios
       .get("https://pokeapi.co/api/v2/pokemon/?limit=50")
       .then(response => {
@@ -35,7 +34,6 @@ class Home extends Component {
           p: results.map(elem => {
             return {
               ur: elem.url,
-
               na: elem.name
             };
           })
@@ -49,18 +47,14 @@ class Home extends Component {
       })
       .then(() => {
         console.log("Start loading");
-
         var count = 0;
-
         for (var i = 0, len = 50; i < len; i++) {
           axios
             .get(m[i].ur)
             .then(response => {
-              items.push(response.data.sprites.back_default);
-
-              count++;
-
-              if (count % 2 == 1) {
+            items.push(response.data.sprites.back_default);
+            count++;
+            if (count % 2 == 1) {
                 console.log(m[count].ur);
                 halfitems.push(response.data.sprites.back_default);
               }
@@ -68,7 +62,6 @@ class Home extends Component {
             .then(() => {
               if (count == 50) {
                 console.log("finish loading!");
-
                 this.setState({ ready: true });
               }
             });
@@ -90,9 +83,7 @@ class Home extends Component {
 
   render() {
     var text = this.state.ready ? "finished loading" : "loading";
-
     this.bobo();
-
     return (
       <Router>
         <div>
@@ -142,21 +133,19 @@ class Gallery extends Component {
   }
 
   render() {
-
-
     const imagesElements = items.map(e => {
           var cao = e.replace(/[^0-9]/ig,"");
-      return(
+           return(
                 <Item.Image  src={`${e}`}     as={Link} to={`/detail/${cao}`}  />
             )
-    });
+           });
 
     const halfimagesElements = halfitems.map(e => {
                     var cao = e.replace(/[^0-9]/ig,"");
-        return(
-         <Item.Image  src={`${e}`}     as={Link} to={`/detail/${cao}`}  />
-      )
-    });
+            return(
+                  <Item.Image  src={`${e}`}     as={Link} to={`/detail/${cao}`}  />
+             )
+              });
 
     var test = this.state.even ? "Click to show All" : "Click to filter out items with odd index in the gallery matrix";
     var element = this.state.even ? halfimagesElements : imagesElements;
@@ -182,7 +171,6 @@ class Detail extends Component {
 
      constructor (props) {
         super(props)
-
         this.state = {
           name: '',
           id: '' ,
@@ -204,7 +192,7 @@ class Detail extends Component {
 
            updatePokeId (PokeId) {
 
-    if(PokeId  != 0 && PokeId  != 51) {
+            if(PokeId  != 0 && PokeId  != 51) {
 
             axios.get(m[PokeId - 1].ur)
              .then((response) => {
@@ -218,7 +206,6 @@ class Detail extends Component {
                 })
                 console.log(response)
                // console.log("checkitout")
-
               }).catch((err) => {
                 console.log(err)
               })
@@ -230,51 +217,39 @@ class Detail extends Component {
 
              render () {
 
-        const detailImg =<Image src= {this.state.img}   size='large'/>
-         const detailName = <h2>Name: {this.state.name}</h2>
+                 const detailImg =<Image src= {this.state.img}   size='large'/>
+                 const detailName = <h2>Name: {this.state.name}</h2>
+                 const id = <div> <h2>ID: {this.state.id}</h2> </div>
+                 const height = <div> <h2>Height:{this.state.height} </h2></div>
+                 const exp = <div> <h2>Base Experience: {this.state.baseExperience} </h2></div>
+                 const wei = <div> <h2>Weight: {this.state.weight} </h2></div>
 
-             const id = <div> <h2>ID: {this.state.id}</h2> </div>
-             const height = <div> <h2>Height:{this.state.height} </h2></div>
-               const exp = <div> <h2>Base Experience: {this.state.baseExperience} </h2></div>
-                const wei = <div> <h2>Weight: {this.state.weight} </h2></div>
+                 const But =  <div>
+                     <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
+                     <span>                                                     </span>
+                      <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
+                         </div>
 
-                const But =  <div>
-                                                                                                                                     <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
-                                                                                                                            <span>                                                     </span>
-                                                                                                                                       <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
-                                                                                                                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                return (
-                  <div >
-                    <center>
-
-                        {detailImg}
-                        {But}
-                        {detailName}
-                        {id}
-                        {height}
-                        {wei}
-                        {exp}
-                    </center>
-                  </div>
-                )
-              }
-            }
+                 return (
+                      <div >
+                        <center>
+                            {detailImg}
+                            {But}
+                            {detailName}
+                            {id}
+                            {height}
+                            {wei}
+                            {exp}
+                        </center>
+                      </div>
+                    )
+                  }
+                }
 
 
-
+Detail.PropTypes = {
+    PokeId : PropTypes.number.isRequired
+}
 
 
 
