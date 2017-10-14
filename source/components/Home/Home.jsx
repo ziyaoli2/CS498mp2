@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Search, Grid, Header } from "semantic-ui-react";
 import { render } from "react-dom";
-import { Link, BrowserRouter as Router, Route } from "react-router-dom";
+import { Link, HashRouter as Router, Route } from "react-router-dom";
 
 import _ from "lodash";
 import faker from "faker";
