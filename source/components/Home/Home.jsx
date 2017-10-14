@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Search, Grid, Header } from "semantic-ui-react";
+import { Button, Search, Grid, Header,Image,Item } from "semantic-ui-react";
 import { render } from "react-dom";
 import { Link, HashRouter as Router, Route } from "react-router-dom";
 
@@ -44,6 +44,7 @@ class Home extends Component {
       .then(() => {
         for (var i = 0, len = this.state.p.length; i < len; ++i) {
           m.push(this.state.p[i]);
+          //console.log(this.state.p[i].ur + " number " + i)
         }
       })
       .then(() => {
@@ -109,11 +110,12 @@ class Home extends Component {
               </Button>
             </Link>
           </center>
-
           <hr />
-
           <Route path="/search" component={SearchPart} />
           <Route path="/gallery" component={Gallery} />
+          <Route path="/detail/:id" render={({ match }) => {
+                                                  return <Detail PokeId={match.params.id} />
+                                                }}  />
         </div>
       </Router>
     );
@@ -140,64 +142,36 @@ class Gallery extends Component {
   }
 
   render() {
+
+
     const imagesElements = items.map(e => {
-   /*   return (
-
-
-      <Router>
-        <Link to= "/detail">
-
-            <img src={`${e}`} />
-
-        </Link>
-  <hr />
-        <Route path = "/detail"
-                component = {Detail}/>
-
-      </Router>
-
-      )*/
-      return(<img src={`${e}`} />)
+          var cao = e.replace(/[^0-9]/ig,"");
+      return(
+                <Item.Image  src={`${e}`}     as={Link} to={`/detail/${cao}`}  />
+            )
     });
 
     const halfimagesElements = halfitems.map(e => {
-  /*    return (
-
-       <Router>
-              <Link to= "/detail">
-
-                  <img src={`${e}`} />
-
-              </Link>
-
-  <hr />
-
-              <Route path = "/detail"
-                      component = {Detail}/>
-
-            </Router>
-
-
-
-      ) */
-      return(<img src={`${e}`} />)
+                    var cao = e.replace(/[^0-9]/ig,"");
+        return(
+         <Item.Image  src={`${e}`}     as={Link} to={`/detail/${cao}`}  />
+      )
     });
 
     var test = this.state.even ? "Click to show All" : "Click to show half(1,3,5,7..)";
     var element = this.state.even ? halfimagesElements : imagesElements;
 
   return (
-      <div>
-        <div>
-          <center>
-            {" "}
-            <Button basic color="black" onClick={this.handleClick}>
-              <b> {test}</b>
-            </Button>
-          </center>
-        </div>
-        {element}
-      </div>
+                   <div>
+                            <div>
+                              <center>
+                                <Button basic color="black" onClick={this.handleClick}>
+                                  <b> {test}</b>
+                                </Button>
+                              </center>
+                            </div>
+                            {element}
+                          </div>
     );
   }
 }
@@ -206,13 +180,80 @@ class Gallery extends Component {
 
 class Detail extends Component {
 
-    render() {
-        return(
-        <h2> Detail!</h2>
-        )
-    }
+     constructor (props) {
+        super(props)
 
-}
+        this.state = {
+          name: '',
+          id: '' ,
+          height: '',
+          img: '',
+          weight: '',
+          baseExperience: ''
+        }
+
+        this.updatePokeId(this.props.PokeId)
+          }
+
+          componentWillReceiveProps (nextProps) {
+              if (nextProps.PokeId !== this.props.PokeId) {
+                this.updatePokeId(nextProps.PokeId)
+              }
+            }
+
+
+           updatePokeId (PokeId) {
+
+
+
+            axios.get(m[PokeId - 1].ur)
+             .then((response) => {
+                this.setState({
+                  name: response.data.species.name,
+                  id: response.data.id,
+                  height: response.data.height,
+                  img:response.data.sprites.back_default,
+                  weight: response.data.weight,
+                  baseExperience: response.data.base_experience
+                })
+                console.log(response)
+               // console.log("checkitout")
+
+              }).catch((err) => {
+                console.log(err)
+              })
+            }
+
+
+             render () {
+
+        const detailImg =  <Image src= {this.state.img}   size='large'/>
+         const detailName = <div><h1>Name: {this.state.name}</h1></div>
+
+             const id = <div> <h2>ID: {this.state.id}</h2> </div>
+             const height = <div> <h2>Height:{this.state.height} </h2></div>
+               const exp = <div> <h2>Base Experience: {this.state.baseExperience} </h2></div>
+                const wei = <div> <h2>Weight: {this.state.weight} </h2></div>
+                return (
+                  <div >
+                    <center>
+
+                        {detailImg}
+                        {detailName}
+                        {id}
+                        {height}
+                        {wei}
+                        {exp}
+                    </center>
+                  </div>
+                )
+              }
+            }
+
+
+
+
+
 
 
 export default Home;
