@@ -158,7 +158,7 @@ class Gallery extends Component {
       )
     });
 
-    var test = this.state.even ? "Click to show All" : "Click to show half(1,3,5,7..)";
+    var test = this.state.even ? "Click to show All" : "Click to filter out items with odd index in the gallery matrix";
     var element = this.state.even ? halfimagesElements : imagesElements;
 
   return (
@@ -227,18 +227,41 @@ class Detail extends Component {
 
              render () {
 
-        const detailImg =  <Image src= {this.state.img}   size='large'/>
-         const detailName = <div><h1>Name: {this.state.name}</h1></div>
+        const detailImg =<Image src= {this.state.img}   size='large'/>
+         const detailName = <h2>Name: {this.state.name}</h2>
 
              const id = <div> <h2>ID: {this.state.id}</h2> </div>
              const height = <div> <h2>Height:{this.state.height} </h2></div>
                const exp = <div> <h2>Base Experience: {this.state.baseExperience} </h2></div>
                 const wei = <div> <h2>Weight: {this.state.weight} </h2></div>
+
+/*(
+var prepre = this.state.id - 1;
+    if(this.state.id == 1) {
+        prepre = 50;
+    }
+ var nextnext = this.state.id + 1;
+   if (this.state.id == 50) {
+        nextnext = 1
+   }
+*/
+
+    const But = <div>
+                       <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
+              <span>                                                     </span>
+                         <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
+        </div>
+
+
+
+
+
                 return (
                   <div >
                     <center>
 
                         {detailImg}
+                        {But}
                         {detailName}
                         {id}
                         {height}
