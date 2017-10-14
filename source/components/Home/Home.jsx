@@ -204,7 +204,7 @@ class Detail extends Component {
 
            updatePokeId (PokeId) {
 
-
+    if(PokeId  != 0 && PokeId  != 51) {
 
             axios.get(m[PokeId - 1].ur)
              .then((response) => {
@@ -224,6 +224,7 @@ class Detail extends Component {
               })
 
 
+}
             }
 
 
@@ -237,50 +238,16 @@ class Detail extends Component {
                const exp = <div> <h2>Base Experience: {this.state.baseExperience} </h2></div>
                 const wei = <div> <h2>Weight: {this.state.weight} </h2></div>
 
-/*(
-var prepre = this.state.id - 1;
-    if(this.state.id == 1) {
-        prepre = 50;
-    }
- var nextnext = this.state.id + 1;
-   if (this.state.id == 50) {
-        nextnext = 1
-   }
-*/
-
-    const But = ()=>{
-            if(this.state.id == 1) {
-                   return( <div>
-                                                 <Button as={Link} to={`/detail/${50}`}>Pre</Button>
-                                        <span>                                                     </span>
-                                                   <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
-                                             </div>)
-                }
-
-                  if (this.state.id == 50) {
-                        return(
-                                    <div>
-                                                                                     <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
-                                                                            <span>                                                     </span>
-                                                                                       <Button as={Link} to={`/detail/${1}`}>Next </Button>
-                                                                                 </div>
-
-
-                        )
-
-                  }
-            return(
-                      <div>
-                                                                                                         <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
-                                                                                                <span>                                                     </span>
-                                                                                                           <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
-                                                                                                     </div>
-
-            )
+                const But =  <div>
+                                                                                                                                     <Button as={Link} to={`/detail/${this.state.id - 1}`}>Pre</Button>
+                                                                                                                            <span>                                                     </span>
+                                                                                                                                       <Button as={Link} to={`/detail/${this.state.id + 1}`}>Next </Button>
+                                                                                                                                 </div>
 
 
 
-    }
+
+
 
 
 
