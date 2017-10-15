@@ -279,6 +279,9 @@ var nameList = [];
 var urlList = [];
 var imageList = [];
 
+var yi = [];
+var er = [];
+
 class Pane extends Component {
 
       constructor (props) {
@@ -286,10 +289,12 @@ class Pane extends Component {
             this.state = {
                   text : '',
                   name : [],
-		  sort : true
+		  sort : true,
+		  way : true
                 }
                 this.fetch = this.fetch.bind(this)
 		this.handleClick = this.handleClick.bind(this)
+		this.Order = this.Order.bind(this)
           }
 
           fetch () {
@@ -308,7 +313,43 @@ class Pane extends Component {
 
                             }
                              nameList = cur;
-			
+			                    nameList.sort();
+			                    yi = nameList.sort();
+
+
+
+			                    /////////////
+
+			                    var leng =[];
+			                    var made = [];
+
+                                        for (var i = 0, len = nameList.length; i < len; i++) {
+
+                                        		//	console.log(nameList[i] + "length is " + nameList[i].length)
+                                        		leng.push(nameList[i].length)
+                                        		made.push(nameList[i])
+                                        		}
+
+                                        		 for (var j = 0, ding = leng.length - 1; j < ding; j++) {
+                                        		    var global = j
+                                        		       for(var q = j + 1; q < ding + 1; q ++ ) {
+                                        		              if(leng[q] < leng[global]) {
+                                                                         global = q;
+                                                                       }
+
+                                        		    }
+                                        		    var temp = leng[j]
+                                        		    var tempp = made[j]
+                                        		    leng[j] = leng[global]
+                                        		    made[j] = made[global]
+                                        		    leng[global] = temp
+                                        		    made[global] = tempp
+                                        		 }
+
+                                              //  var f = [];
+                                              er= made
+
+			                    ////////
 
           }
 
@@ -319,10 +360,20 @@ class Pane extends Component {
         }
 
 
+        Order(event) {
+            this.setState({way: !this.state.way});
+
+        }
+
+
 
     render() {
 
-nameList = this.state.sort ? nameList.sort() : nameList.sort().reverse()
+nameList = this.state.way ? yi : er
+
+nameList = this.state.sort ? nameList : nameList.reverse()
+
+
 
     const qq = nameList.map(e => {
         var image = ''
@@ -347,6 +398,7 @@ nameList = this.state.sort ? nameList.sort() : nameList.sort().reverse()
                     return(
                                 <div>
 				<Button onClick={this.handleClick}> Reverse Order </Button>
+				<Button onClick={this.Order}> Another way to order(alphabetically or by length of name) </Button>
                              <Input fluid loading icon='user' placeholder='Search...'  onChange={(event, data) => {
                                                                                                  this.setState({text : data.value}, this.props.OnDataChange.bind(this, this.state))
                                                                                                  this.fetch()
