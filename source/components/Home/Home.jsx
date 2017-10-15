@@ -322,8 +322,15 @@ class Pane extends Component {
 
         for(var i = 0, len = m.length; i < len; i++) {
             if (m[i].na == e ) {
-                image = items[i]
-		id = i
+               	
+				axios.get(m[i].ur)
+		     .then((response) => {
+		       		image = response.data.sprites.back_default
+		       
+		      }).catch((err) => {
+		        console.log(err)
+		      })
+			
             }
 
         }
