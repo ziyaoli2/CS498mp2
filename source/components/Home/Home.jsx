@@ -318,6 +318,7 @@ class Pane extends Component {
     const qq = nameList.map(e => {
         var image = ''
 
+
         for(var i = 0, len = m.length; i < len; i++) {
             if (m[i].na == e ) {
                 image = items[i]
@@ -325,11 +326,14 @@ class Pane extends Component {
 
         }
 
-                return(
+       var cao = img.replace(/[^0-9]/ig,"");
+
+                return(<div>
                       <Item>
                       <Item.image  src={image}  />
                       {e}
                       </Item>
+                      </div>
                  )
                   });
 
