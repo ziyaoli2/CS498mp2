@@ -307,6 +307,7 @@ class Pane extends Component {
 
                             }
                              nameList = cur;
+				nameList.sort();
 
 
           }
@@ -317,16 +318,17 @@ class Pane extends Component {
 
     const qq = nameList.map(e => {
         var image = ''
-
+		var id = ''
 
         for(var i = 0, len = m.length; i < len; i++) {
             if (m[i].na == e ) {
                 image = items[i]
+		id = i
             }
 
         }
-
-       var cao = img.replace(/[^0-9]/ig,"");
+ 
+       var cao = image.replace(/[^0-9]/ig,"");
 
                 return(<div>
                       <Item>
