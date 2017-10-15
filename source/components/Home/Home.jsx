@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Search, Grid, Header,Image,Item } from "semantic-ui-react";
+import { Button, Search, Grid, Header,Image,Item,Input } from "semantic-ui-react";
 import { render } from "react-dom";
 import { Link, HashRouter as Router, Route } from "react-router-dom";
 import PropTypes from 'prop-types'
@@ -43,6 +43,7 @@ class Home extends Component {
         for (var i = 0, len = this.state.p.length; i < len; ++i) {
           m.push(this.state.p[i]);
           //console.log(this.state.p[i].ur + " number " + i)
+         // console.log(m[i].na + " my name ")
         }
       })
       .then(() => {
@@ -82,7 +83,7 @@ class Home extends Component {
   }
 
   render() {
-    var text = this.state.ready ? "finished loading" : "loading";
+    var text = this.state.ready ? "finished loading" : "data loading";
     this.bobo();
     return (
       <Router>
@@ -90,7 +91,7 @@ class Home extends Component {
           <center>
             <Link to="/search">
               <Button basic color="blue">
-                Search
+                Search {text}
               </Button>
             </Link>
             <span> </span>
@@ -113,11 +114,6 @@ class Home extends Component {
   }
 }
 
-class SearchPart extends Component {
-  render() {
-    return <h1>Search here</h1>;
-  }
-}
 
 class Gallery extends Component {
   constructor(props) {
@@ -250,6 +246,107 @@ class Detail extends Component {
 Detail.PropTypes = {
     PokeId : PropTypes.number.isRequired
 }
+
+
+
+
+
+class SearchPart extends Component {
+
+    constructor(props) {
+        super(props)
+        this.getInput = this.getInput.bind(this)
+      }
+
+
+    getInput() {
+
+    }
+
+
+
+
+  render() {
+    return(
+    <div >
+    <h1>Search here</h1>
+        <Pane OnDataChange={this.getInput}/>
+        </div>
+    )
+  }
+}
+
+var nameList = [];
+var urlList = [];
+var imageList = [];
+
+class Pane extends Component {
+
+      constructor (props) {
+            super(props)
+            this.state = {
+                  text : '',
+                  name : []
+                }
+                this.fetch = this.fetch.bind(this)
+          }
+
+          fetch () {
+
+
+
+        for (var i = 0, len = m.length; i < len; i++) {
+
+           if(this.state.text.length != 0 && m[i].na.indexOf(this.state.text) >= 0)
+           {
+                console.log(m[i].na)
+               nameList.push(m[i].na)
+               urlList.push(m[i].ur)
+
+           }
+                    }
+
+    this.setState({
+              name: nameList.map(elem => {
+                return {
+                  n :elem,
+                };
+              })
+            });
+
+
+          }
+
+
+
+
+    render() {
+
+
+            const ResultName = this.state.name.map (
+                    e => {
+                        return <Item > <h1> {e} </h1>    </Item>
+
+
+            });
+
+                    return(
+                                <div>
+                             <Input fluid loading icon='user' placeholder='Search...'  onChange={(event, data) => {
+                                                                                                 this.setState({text : data.value}, this.props.OnDataChange.bind(this, this.state))
+                                                                                                 this.fetch()
+                                                                                               }}
+                                                                                                />
+                                {ResultName}
+                                </div>
+                    )
+        }
+
+}
+
+
+
+
 
 
 
