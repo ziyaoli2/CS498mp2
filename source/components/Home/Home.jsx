@@ -319,29 +319,23 @@ class Pane extends Component {
     const qq = nameList.map(e => {
         var image = ''
 		var id = ''
+		for (var i = 0, len = m.length; i < len; i++) {
+			if (m[i].na == e) {
+				id = i + 1
+			}	       
+		} 
+      
+	const ID = <h3> {id} </h3>
 
-        for(var i = 0, len = m.length; i < len; i++) {
-            if (m[i].na == e ) {
-               	
-				axios.get(m[i].ur)
-		     .then((response) => {
-		       		image = response.data.sprites.back_default
-		       
-		      }).catch((err) => {
-		        console.log(err)
-		      })
-			
-            }
-
-        }
- 
-       var cao = image.replace(/[^0-9]/ig,"");
-
+//as={Link} to={`/detail/${this.state.id - 1}`
                 return(<div>
-                      <Item>
-                      <Item.Image  src={`${image}`}  />
-                      {e}
+                      <Item  as={Link} to={`/detail/${id}`}     >
+                      
+                      	{e}
+			{ID}
+			
                       </Item>
+			
                       </div>
                  )
                   });
