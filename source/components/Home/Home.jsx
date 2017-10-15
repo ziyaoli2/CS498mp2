@@ -8,7 +8,6 @@ import axios from "axios";
 import styles from "./Home.scss";
 
 var m = [];
-
 var items = [];
 var halfitems = [];
 
@@ -286,9 +285,11 @@ class Pane extends Component {
             super(props)
             this.state = {
                   text : '',
-                  name : []
+                  name : [],
+		  sort : true
                 }
                 this.fetch = this.fetch.bind(this)
+		this.handleClick = this.handleClick.bind(this)
           }
 
           fetch () {
@@ -307,14 +308,21 @@ class Pane extends Component {
 
                             }
                              nameList = cur;
-				nameList.sort();
-
+			
 
           }
 
 
+
+		 handleClick(event) {
+          this.setState({sort: !this.state.sort});
+        }
+
+
+
     render() {
 
+nameList = this.state.sort ? nameList.sort() : nameList.sort().reverse()
 
     const qq = nameList.map(e => {
         var image = ''
@@ -329,19 +337,16 @@ class Pane extends Component {
 
 //as={Link} to={`/detail/${this.state.id - 1}`
                 return(<div>
-                      <Item  as={Link} to={`/detail/${id}`}     >
-                      
+                      <Item  as={Link} to={`/detail/${id}`}     >                   
                       	{e}
-			{ID}
-			
-                      </Item>
-			
+			{ID}			
+                      </Item>		
                       </div>
                  )
                   });
-
                     return(
                                 <div>
+				<Button onClick={this.handleClick}> Reverse Order </Button>
                              <Input fluid loading icon='user' placeholder='Search...'  onChange={(event, data) => {
                                                                                                  this.setState({text : data.value}, this.props.OnDataChange.bind(this, this.state))
                                                                                                  this.fetch()
