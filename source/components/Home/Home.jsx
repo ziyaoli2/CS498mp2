@@ -292,43 +292,32 @@ class Pane extends Component {
           }
 
           fetch () {
+                for (var i = 0, len = m.length; i < len; i++) {
+                        var cur =[];
+                   if(this.state.text.length != 0 && m[i].na.indexOf(this.state.text) >= 0)
+                   {
+                        console.log(m[i].na)
 
+                       cur.push(m[i].na)
 
+                       urlList.push(m[i].ur)
 
-        for (var i = 0, len = m.length; i < len; i++) {
-
-           if(this.state.text.length != 0 && m[i].na.indexOf(this.state.text) >= 0)
-           {
-                console.log(m[i].na)
-               nameList.push(m[i].na)
-               urlList.push(m[i].ur)
-
-           }
-                    }
-
-    this.setState({
-              name: nameList.map(elem => {
-                return {
-                  n :elem,
-                };
-              })
-            });
+                   }
+                   nameList = cur;
+                            }
 
 
           }
 
 
-
-
     render() {
 
 
-            const ResultName = this.state.name.map (
-                    e => {
-                        return <Item > <h1> {e} </h1>    </Item>
-
-
-            });
+    const qq = nameList.map(e => {
+                return(
+                      <Item>{e}</Item>
+                 )
+                  });
 
                     return(
                                 <div>
@@ -337,7 +326,7 @@ class Pane extends Component {
                                                                                                  this.fetch()
                                                                                                }}
                                                                                                 />
-                                {ResultName}
+                                {qq}
                                 </div>
                     )
         }
