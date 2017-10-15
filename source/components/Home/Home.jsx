@@ -292,8 +292,9 @@ class Pane extends Component {
           }
 
           fetch () {
+          var cur =[];
                 for (var i = 0, len = m.length; i < len; i++) {
-                        var cur =[];
+
                    if(this.state.text.length != 0 && m[i].na.indexOf(this.state.text) >= 0)
                    {
                         console.log(m[i].na)
@@ -303,8 +304,9 @@ class Pane extends Component {
                        urlList.push(m[i].ur)
 
                    }
-                   nameList = cur;
+
                             }
+                             nameList = cur;
 
 
           }
@@ -314,8 +316,20 @@ class Pane extends Component {
 
 
     const qq = nameList.map(e => {
+        var image = ''
+
+        for(var i = 0, len = m.length; i < len; i++) {
+            if (m[i].na == e ) {
+                image = items[i]
+            }
+
+        }
+
                 return(
-                      <Item>{e}</Item>
+                      <Item>
+                      <Item.image  src={image}  />
+                      {e}
+                      </Item>
                  )
                   });
 
