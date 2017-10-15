@@ -330,7 +330,7 @@ class Pane extends Component {
 
                 return(<div>
                       <Item>
-                      <Item.Image  src={image}  />
+                      <Item.Image  src={`${image}`}  />
                       {e}
                       </Item>
                       </div>
